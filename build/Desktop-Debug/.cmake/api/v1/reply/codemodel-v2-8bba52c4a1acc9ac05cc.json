@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-5f91c7a20a12de04b112.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "LexaSNN",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "LexaSNN::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-LexaSNN-Debug-4ad09ac201c7d76cb22d.json",
+					"name" : "LexaSNN",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "LexaSNN_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-LexaSNN_autogen-Debug-ab6128f9834db63e4adc.json",
+					"name" : "LexaSNN_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "LexaSNN_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-LexaSNN_autogen_timestamp_deps-Debug-a4028d2dd418b4ca8948.json",
+					"name" : "LexaSNN_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/cetttok/Projects/LexaSNN/build/Desktop-Debug",
+		"source" : "/home/cetttok/Projects/LexaSNN"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
