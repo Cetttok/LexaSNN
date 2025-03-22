@@ -23,6 +23,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         field.cpp field.h item.cpp item.h polygon.cpp polygon.h rect.cpp rect.h widget.cpp widget.h
+        ball.h ball.cpp
+        physicsengine.h physicsengine.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET LexaSNN APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

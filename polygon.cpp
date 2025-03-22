@@ -11,6 +11,15 @@ void Polygon::updatelines()
     _linesForDraw.append(QLineF(_points.last(),_points.first()));
 }
 
+double Polygon::chatGptMagicFormula(QLineF line, QPointF center)
+{
+    QPointF point1 = line.p1();
+    QPointF point2 = line.p2();
+    double op1 = fabs((point2.x()-point1.x())*(center.y()-point1.y()) - (center.x()-point1.x())*(point2.y()-point1.y()));
+    double op2 = sqrt(pow((point2.x()-point1.x()),2) + pow((point2.y()-point1.y()),2) );
+    return op1/op2;
+}
+
 Polygon::Polygon(QList<QPointF> points) {
     _points = points;
     QPointF pointsSum = QPointF(0,0);
@@ -68,4 +77,41 @@ void Polygon::debug()
     }
     qDebug() << "";
 
+}
+
+double Polygon::getSmallestDistanceForPoint(QPointF point)
+{
+    double min = chatGptMagicFormula(_linesForDraw.first(), point);
+    for (int i = 1; i < _linesForDraw.size(); i++){
+        if (chatGptMagicFormula(_linesForDraw[i],point)<min){
+            min = chatGptMagicFormula(_linesForDraw[i],point);
+        }
+    }
+    return min;
+}
+
+QLineF Polygon::getNearestLineForPoint(QPointF point)
+{
+    double min = 1;
+    for (int i = 1; i < _linesForDraw.size(); i++){
+        if (chatGptMagicFormula(_linesForDraw[i],point)<min){
+            min = i;
+        }
+    }
+    return _linesForDraw[min];
+}
+
+PhysicsPolygon::PhysicsPolygon(QList<QPointF> points, QPointF speed, double rotateSpeed):Polygon(points), _speed(speed), _rotateSpeed(rotateSpeed)
+{
+
+}
+
+void PhysicsPolygon::moveAtSpeed(double tics)
+{
+    moveAt(_speed * tics);
+}
+
+void PhysicsPolygon::rotateAtSpeed(double tics)
+{
+    rotate(_rotateSpeed*tics);
 }

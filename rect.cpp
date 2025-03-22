@@ -34,7 +34,7 @@ void Rect::draw(QPainter &painter)
 
 void Rect::move(int tic)
 {
-    qDebug() << "tic";
+    //qDebug() << "tic";
     _rect.moveCenter(_rect.center()+(_speed*tic));
 
 }

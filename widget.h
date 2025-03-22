@@ -6,6 +6,8 @@
 #include <QPaintEvent>
 #include <QTimer>
 #include "polygon.h"
+#include "physicsengine.h"
+#include "ball.h"
 class Widget : public QWidget
 {
     Q_OBJECT
@@ -17,8 +19,11 @@ public:
 
     void paintEvent(QPaintEvent *event);
     Field mField;
-    Polygon mPolygon = Polygon(QList<QPointF>({QPointF(40,40),QPointF(100,40),QPointF(120,120),QPointF(200,200),QPointF(40,130)}));
-
+    // //Polygon mPolygon = PhysicsPolygon(QList<QPointF>({QPointF(40,40),QPointF(100,40),QPointF(120,120),QPointF(40,130)}));
+    // PhysicsEngine mEngine = PhysicsEngine(Ball(QPointF(85,85),3),PhysicsPolygon(QList<QPointF>(
+    //                                           {QPointF(40,40),QPointF(100,40),QPointF(120,120),QPointF(40,130)}
+    //                                           ))
+    //                                       );
 public slots:
     void everyTic();
 

@@ -1,6 +1,6 @@
 #include "widget.h"
 #include <QDebug>
-const int TIC_INTERVAL = 50;
+const int TIC_INTERVAL = 60;
 
 Widget::Widget(int width, int height, QWidget *parent):QWidget(parent),mField(Field(width,height))
 {
@@ -21,16 +21,13 @@ void Widget::paintEvent(QPaintEvent *event)
     painter.begin(this);
     mField.draw(painter);
     QPen pen = QPen(Qt::blue);
-    mPolygon.draw(painter, pen);
     painter.end();
-    mPolygon.rotate(0.07);
-    mPolygon.moveAt(QPointF(0.3,0.3));
 
 }
 
 void Widget::everyTic()
 {
-    qDebug() << "helo";
+    //qDebug() << "helo";
     repaint();
     mField.onTic();
 }
