@@ -6,6 +6,9 @@ void Polygon::updatelines()
 {
     _linesForDraw.clear();
     for (int i = 0; i < _points.size()-1; i++){
+        if (i == 0){
+            _linesForDraw.append(QLineF(_points[i+1],_points[i]));
+        }
         _linesForDraw.append(QLineF(_points[i],_points[i+1]));
     }
     _linesForDraw.append(QLineF(_points.last(),_points.first()));

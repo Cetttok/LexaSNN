@@ -32,10 +32,10 @@ void Ball::moveAtSpeed(double tic)
     //qDebug() << _speed;
 }
 QPointF chatGptSpeedMagicFormula(QLineF line, QPointF speed){
-    double x1 = line.p1().x();
-    double x2 = line.p2().x();
-    double y1 = line.p1().y();
-    double y2 = line.p2().y();
+    double x1 = line.p2().x();
+    double x2 = line.p1().x();
+    double y1 = line.p2().y();
+    double y2 = line.p1().y();
 
     double   yn=(x1-x2)/pow(( pow(x1-x2,2)+pow(y1-y2,2)  ),0.5);
     double  xn=(y2-y1)/pow( pow(x1-x2,2)+pow(y1-y2,2),0.5);

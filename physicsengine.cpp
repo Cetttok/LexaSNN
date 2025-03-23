@@ -37,7 +37,7 @@ void PhysicsEngine::makeTic()
     if (checkIntersects()){
         //_ball.moveAtSpeed(-1);
         reactIntersects();
-        _ball.moveAtSpeed(20);
+        _ball.moveAtSpeed(1);
 
     }
     _polygon.moveAtSpeed();
