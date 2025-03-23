@@ -93,9 +93,11 @@ double Polygon::getSmallestDistanceForPoint(QPointF point)
 QLineF Polygon::getNearestLineForPoint(QPointF point)
 {
     double min = 1;
+    double minValue = chatGptMagicFormula(_linesForDraw[0],point);
     for (int i = 1; i < _linesForDraw.size(); i++){
-        if (chatGptMagicFormula(_linesForDraw[i],point)<min){
+        if (chatGptMagicFormula(_linesForDraw[i],point)<minValue){
             min = i;
+            minValue = chatGptMagicFormula(_linesForDraw[i],point);
         }
     }
     return _linesForDraw[min];

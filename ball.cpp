@@ -55,7 +55,7 @@ QPointF chatGptSpeedMagicFormula(QLineF line, QPointF speed){
    // return QPointF(speed.y(),speed.x() );
     // QPointF normal = QPointF( line.p1().y()-line.p2().y(),line.p2().x()-line.p1().x());
     // double normalLen = sqrt(pow(normal.x(),2)+pow(normal.y(),2));
-    // QPointF result = -(speed - 2 * (QPointF::dotProduct(speed,normal) / pow(normalLen,2)) * normal);
+    // QPointF result = (speed - 2 * (QPointF::dotProduct(speed,normal) / pow(normalLen,2)) * normal);
     // qDebug() << result;
     // return result;
 }
