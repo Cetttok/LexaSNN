@@ -83,11 +83,13 @@ double Polygon::getSmallestDistanceForPoint(QPointF point)
 {
     double min = chatGptMagicFormula(_linesForDraw.first(), point);
     for (int i = 1; i < _linesForDraw.size(); i++){
-        if (chatGptMagicFormula(_linesForDraw[i],point)<min){
-            min = chatGptMagicFormula(_linesForDraw[i],point);
+        double thisValue=chatGptMagicFormula(_linesForDraw[i],point);
+        if (thisValue<min){
+            min =thisValue;
         }
     }
     return min;
+
 }
 
 QLineF Polygon::getNearestLineForPoint(QPointF point)
@@ -101,6 +103,7 @@ QLineF Polygon::getNearestLineForPoint(QPointF point)
         }
     }
     return _linesForDraw[min];
+
 }
 
 PhysicsPolygon::PhysicsPolygon(QList<QPointF> points, QPointF speed, double rotateSpeed):Polygon(points), _speed(speed), _rotateSpeed(rotateSpeed)
