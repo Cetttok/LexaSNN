@@ -26,7 +26,7 @@ void PhysicsEngine::reactIntersects()
 }
 
 
-PhysicsEngine::PhysicsEngine(Ball ball, PhysicsPolygon polygon): _ball(ball), _polygon(polygon)
+PhysicsEngine::PhysicsEngine(Ball ball, MarkedPhysicsPolygon polygon): _ball(ball), _polygon(polygon)
 {
 
 }
@@ -42,6 +42,7 @@ void PhysicsEngine::makeTic()
     }
     _polygon.moveAtSpeed();
     _polygon.rotateAtSpeed();
+    _polygon.moveMark(1);
 }
 
 Ball *PhysicsEngine::ball()
@@ -49,7 +50,7 @@ Ball *PhysicsEngine::ball()
     return & _ball;
 }
 
-PhysicsPolygon *PhysicsEngine::polygon()
+MarkedPhysicsPolygon *PhysicsEngine::polygon()
 {
     return  & _polygon;
 }

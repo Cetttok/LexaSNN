@@ -31,7 +31,7 @@ void Ball::moveAtSpeed(double tic)
     _center += _speed*tic;
     //qDebug() << _speed;
 }
-QPointF chatGptSpeedMagicFormula(QLineF line, QPointF speed){
+QPointF lexaSpeedMagicFormula(QLineF line, QPointF speed){
     double x1 = line.p2().x();
     double x2 = line.p1().x();
     double y1 = line.p2().y();
@@ -62,7 +62,7 @@ QPointF chatGptSpeedMagicFormula(QLineF line, QPointF speed){
 void Ball::speedSwap(QLineF atLine)
 {
 
-    _speed = chatGptSpeedMagicFormula(atLine,_speed);
+    _speed = lexaSpeedMagicFormula(atLine,_speed);
 }
 
 void Ball::draw(QPainter &painter, QPen &pen)

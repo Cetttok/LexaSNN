@@ -6,15 +6,15 @@ void Polygon::updatelines()
 {
     _linesForDraw.clear();
     for (int i = 0; i < _points.size()-1; i++){
-        if (i == 0){
-            _linesForDraw.append(QLineF(_points[i+1],_points[i]));
-        }
+        // if (i == 0){
+        //     _linesForDraw.append(QLineF(_points[i+1],_points[i]));
+        // }
         _linesForDraw.append(QLineF(_points[i],_points[i+1]));
     }
     _linesForDraw.append(QLineF(_points.last(),_points.first()));
 }
 
-double Polygon::chatGptMagicFormula(QLineF line, QPointF center)
+double Polygon::lexaMagicFormula(QLineF line, QPointF center)
 {
     QPointF point1 = line.p1();
     QPointF point2 = line.p2();
@@ -84,9 +84,9 @@ void Polygon::debug()
 
 double Polygon::getSmallestDistanceForPoint(QPointF point)
 {
-    double min = chatGptMagicFormula(_linesForDraw.first(), point);
+    double min = lexaMagicFormula(_linesForDraw.first(), point);
     for (int i = 1; i < _linesForDraw.size(); i++){
-        double thisValue=chatGptMagicFormula(_linesForDraw[i],point);
+        double thisValue=lexaMagicFormula(_linesForDraw[i],point);
         if (thisValue<min){
             min =thisValue;
         }
@@ -97,12 +97,12 @@ double Polygon::getSmallestDistanceForPoint(QPointF point)
 
 QLineF Polygon::getNearestLineForPoint(QPointF point)
 {
-    double min = 1;
-    double minValue = chatGptMagicFormula(_linesForDraw[0],point);
+    double min = 0;
+    double minValue = lexaMagicFormula(_linesForDraw[0],point);
     for (int i = 1; i < _linesForDraw.size(); i++){
-        if (chatGptMagicFormula(_linesForDraw[i],point)<minValue){
+        if (lexaMagicFormula(_linesForDraw[i],point)<minValue){
             min = i;
-            minValue = chatGptMagicFormula(_linesForDraw[i],point);
+            minValue = lexaMagicFormula(_linesForDraw[i],point);
         }
     }
     return _linesForDraw[min];
@@ -123,3 +123,91 @@ void PhysicsPolygon::rotateAtSpeed(double tics)
 {
     rotate(_rotateSpeed*tics);
 }
+
+QLineF MarkedPhysicsPolygon::transposeLine(QLineF &line)
+{
+    return QLineF(line.p2(),line.p1());
+}
+
+void MarkedPhysicsPolygon::moveMark(int on)
+{
+
+    _markPlace += on;
+    updateMark();
+}
+
+MarkedPhysicsPolygon::MarkedPhysicsPolygon(QList<QPointF> points, int markLen, QPointF speed, double rotateSpeed):PhysicsPolygon(points,speed,rotateSpeed), _markLen(markLen)
+{
+    _allPolygonLen = 0;
+    _polygonLen = QList<double>();
+    for (int i = 0; i < _linesForDraw.size(); i++){
+        _polygonLen.append(_linesForDraw[i].length());
+        _allPolygonLen += _linesForDraw[i].length();
+
+    }
+
+    _markPlace =0;
+    updateMark();
+
+}
+
+void MarkedPhysicsPolygon::draw(QPainter &painter, QPen &polyPen, QPen &markPen)
+{
+    PhysicsPolygon::draw(painter,polyPen);
+    painter.setPen(markPen);
+    for (QLineF &line : _markLines){
+        painter.drawLine(line);
+    }
+
+}
+
+void MarkedPhysicsPolygon::updateMark()
+{
+    _markLines = QList<QLineF> ();
+    _markPlace = int(_markPlace)%(_allPolygonLen);
+    double markLenRemain = _markLen;
+    double markPlaceRemain = _markPlace;
+
+
+    while(markLenRemain>  1){
+        for (int i = 0; i < _polygonLen.size(); i++){
+            if (_polygonLen[i] <= markPlaceRemain){
+                markPlaceRemain -= _polygonLen[i];
+                continue;
+            }
+            else if (_polygonLen[i] <= (markPlaceRemain + markLenRemain)){
+                QLineF someMarkLine = transposeLine(_linesForDraw[i]);
+                someMarkLine.setLength((_polygonLen[i]-markPlaceRemain));
+                markLenRemain -= (_polygonLen[i]-markPlaceRemain);
+                someMarkLine.setLength(_polygonLen[i]-markPlaceRemain);
+                markPlaceRemain = 0;
+                _markLines.append(someMarkLine);
+                continue;
+            }
+
+            else if(_polygonLen[i] >= (markPlaceRemain + markLenRemain)){
+                QLineF someMarkLine = transposeLine(_linesForDraw[i]);
+                someMarkLine.setLength(_polygonLen[i]- markPlaceRemain);
+                someMarkLine = transposeLine(someMarkLine);
+                someMarkLine.setLength(markLenRemain);
+                //someMarkLine.setLength(_polygonLen[i]-markPlaceRemain);
+                //someMarkLine = transposeLine(someMarkLine);
+                markLenRemain = 0;
+                markPlaceRemain = 0;
+                _markLines.append(someMarkLine);
+                break;
+            }
+            else{
+                qDebug() << "heloe";
+                //int i = 1/0;
+            }
+        }
+    }
+
+
+
+
+
+}
+
+

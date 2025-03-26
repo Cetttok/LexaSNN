@@ -6,16 +6,16 @@ class PhysicsEngine
 {
 protected:
     Ball _ball;
-    PhysicsPolygon _polygon;
+    MarkedPhysicsPolygon _polygon;
     bool iSBallIntersectPolygon();
     bool checkIntersects();
     void reactIntersects();
 
 public:
-    PhysicsEngine(Ball ball, PhysicsPolygon polygon);
+    PhysicsEngine(Ball ball, MarkedPhysicsPolygon polygon);
     void makeTic();
     Ball * ball();
-    PhysicsPolygon * polygon();
+    MarkedPhysicsPolygon * polygon();
 
 };
 
