@@ -136,7 +136,13 @@ void MarkedPhysicsPolygon::moveMark(int on)
     updateMark();
 }
 
-MarkedPhysicsPolygon::MarkedPhysicsPolygon(QList<QPointF> points, int markLen, QPointF speed, double rotateSpeed):PhysicsPolygon(points,speed,rotateSpeed), _markLen(markLen)
+void MarkedPhysicsPolygon::moveMarkAtSpeed(double tics)
+{
+    _markPlace += int(_markSpeed*tics);
+    updateMark();
+}
+
+MarkedPhysicsPolygon::MarkedPhysicsPolygon(QList<QPointF> points, int markLen, QPointF speed, double rotateSpeed, int markSpeed):PhysicsPolygon(points,speed,rotateSpeed), _markLen(markLen),_markSpeed(markSpeed)
 {
     _allPolygonLen = 0;
     _polygonLen = QList<double>();

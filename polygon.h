@@ -49,9 +49,11 @@ protected:
     QList<double >_polygonLen;
     double _markPlace;
     int _allPolygonLen;
+    int _markSpeed;
 public:
     void moveMark(int on);
-    MarkedPhysicsPolygon(QList<QPointF> points,int markLen, QPointF speed = QPointF(0,0), double rotateSpeed = 0);
+    void moveMarkAtSpeed(double tics);
+    MarkedPhysicsPolygon(QList<QPointF> points,int markLen, QPointF speed = QPointF(0,0), double rotateSpeed = 0, int markSpeed = 1);
    // void moveAt(QPointF diff);
     //void moveTo(QPointF newCenter);
     void draw(QPainter &painter,  QPen &polyPen, QPen &markPen);

@@ -42,7 +42,7 @@ void PhysicsEngine::makeTic()
     }
     _polygon.moveAtSpeed();
     _polygon.rotateAtSpeed();
-    _polygon.moveMark(1);
+    _polygon.moveMarkAtSpeed(1);
 }
 
 Ball *PhysicsEngine::ball()
