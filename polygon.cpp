@@ -129,6 +129,30 @@ QLineF MarkedPhysicsPolygon::transposeLine(QLineF &line)
     return QLineF(line.p2(),line.p1());
 }
 
+int MarkedPhysicsPolygon::getPositionForLineAndTouch(QLineF line, QPointF touch, double distanceToLine)
+{
+    QLineF lineFromTouchToLineStartPoint = QLineF(touch,line.p1());
+    int position = sqrt(pow(lineFromTouchToLineStartPoint.length(),2) - pow(distanceToLine,2));
+    return position;
+}
+
+QLineF MarkedPhysicsPolygon::getNearestLineForPoint(QPointF point)
+{
+    QLineF line = Polygon::getNearestLineForPoint(point);
+    _lastTouchLineId = _linesForDraw.indexOf(line);
+    return line;
+}
+
+bool MarkedPhysicsPolygon::isBallOnMark(QPointF touch, double distanceForLine)
+{
+    int position = getPositionForLineAndTouch(_linesForDraw[_lastTouchLineId],touch,distanceForLine);
+
+    if (_markLenOnLines[_lastTouchLineId].x() < position && _markLenOnLines[_lastTouchLineId].y() > position){
+        return true;
+    }
+    return false;
+}
+
 void MarkedPhysicsPolygon::moveMark(int on)
 {
 
@@ -149,8 +173,9 @@ MarkedPhysicsPolygon::MarkedPhysicsPolygon(QList<QPointF> points, int markLen, Q
     for (int i = 0; i < _linesForDraw.size(); i++){
         _polygonLen.append(_linesForDraw[i].length());
         _allPolygonLen += _linesForDraw[i].length();
-
+        _markLenOnLines.append(QPoint(0,0));
     }
+
 
     _markPlace =0;
     updateMark();
@@ -179,6 +204,7 @@ void MarkedPhysicsPolygon::updateMark()
         for (int i = 0; i < _polygonLen.size(); i++){
             if (_polygonLen[i] <= markPlaceRemain){
                 markPlaceRemain -= _polygonLen[i];
+                _markLenOnLines[i] = QPoint(0,0);
                 continue;
             }
             else if (_polygonLen[i] <= (markPlaceRemain + markLenRemain)){
@@ -186,8 +212,9 @@ void MarkedPhysicsPolygon::updateMark()
                 someMarkLine.setLength((_polygonLen[i]-markPlaceRemain));
                 markLenRemain -= (_polygonLen[i]-markPlaceRemain);
                 someMarkLine.setLength(_polygonLen[i]-markPlaceRemain);
-                markPlaceRemain = 0;
                 _markLines.append(someMarkLine);
+                _markLenOnLines[i] = QPoint(markPlaceRemain,_polygonLen[i]);
+                markPlaceRemain = 0;
                 continue;
             }
 
@@ -198,15 +225,13 @@ void MarkedPhysicsPolygon::updateMark()
                 someMarkLine.setLength(markLenRemain);
                 //someMarkLine.setLength(_polygonLen[i]-markPlaceRemain);
                 //someMarkLine = transposeLine(someMarkLine);
+                _markLines.append(someMarkLine);
+                _markLenOnLines[i] = QPoint(markPlaceRemain, markPlaceRemain+markLenRemain);
                 markLenRemain = 0;
                 markPlaceRemain = 0;
-                _markLines.append(someMarkLine);
                 break;
             }
-            else{
-                qDebug() << "heloe";
-                //int i = 1/0;
-            }
+            _markLenOnLines[i] = QPoint(0,0);
         }
     }
 

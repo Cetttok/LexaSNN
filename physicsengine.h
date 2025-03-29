@@ -2,8 +2,11 @@
 #define PHYSICSENGINE_H
 #include "ball.h"
 #include "polygon.h"
-class PhysicsEngine
+#include <QObject>
+class PhysicsEngine : public QObject
+
 {
+Q_OBJECT
 protected:
     Ball _ball;
     MarkedPhysicsPolygon _polygon;
@@ -16,7 +19,8 @@ public:
     void makeTic();
     Ball * ball();
     MarkedPhysicsPolygon * polygon();
-
+signals:
+    void onBallTouchMark();
 };
 
 #endif // PHYSICSENGINE_H

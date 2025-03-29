@@ -50,7 +50,13 @@ protected:
     double _markPlace;
     int _allPolygonLen;
     int _markSpeed;
+    int _lastTouchLineId = 0;
+    QList <QPoint> _markLenOnLines;
+    int getPositionForLineAndTouch(QLineF line, QPointF touch, double distanceToLine);
+
 public:
+    QLineF getNearestLineForPoint(QPointF point);
+    bool isBallOnMark(QPointF touch, double distanceForLine);
     void moveMark(int on);
     void moveMarkAtSpeed(double tics);
     MarkedPhysicsPolygon(QList<QPointF> points,int markLen, QPointF speed = QPointF(0,0), double rotateSpeed = 0, int markSpeed = 1);
@@ -60,7 +66,8 @@ public:
     //void rotate(double atAngle);
     void updateMark();
 
-     
+
+
 
 };
 

@@ -23,6 +23,10 @@ bool PhysicsEngine::checkIntersects()
 void PhysicsEngine::reactIntersects()
 {
     _ball.speedSwap(_polygon.getNearestLineForPoint(_ball.center()));
+
+    if (_polygon.isBallOnMark(_ball.center(),_polygon.getSmallestDistanceForPoint(_ball.center()))){
+        emit onBallTouchMark();
+    }
 }
 
 
@@ -36,6 +40,7 @@ void PhysicsEngine::makeTic()
     _ball.moveAtSpeed();
     if (checkIntersects()){
         //_ball.moveAtSpeed(-1);
+
         reactIntersects();
         _ball.moveAtSpeed(1);
 

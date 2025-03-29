@@ -26,7 +26,7 @@ public:
     //                                       );
 public slots:
     void everyTic();
-
+    void onBallTouchMark();
 
 };
 #endif // WIDGET_H

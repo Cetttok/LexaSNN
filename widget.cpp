@@ -9,6 +9,7 @@ Widget::Widget(int width, int height, QWidget *parent):QWidget(parent),mField(Fi
     resize(width,height);
     QObject::connect(_ticTimer, SIGNAL(timeout()), this, SLOT(everyTic()));
     _ticTimer->start(TIC_INTERVAL);
+    QObject::connect(&mField._engine, SIGNAL(onBallTouchMark()), this, SLOT(onBallTouchMark()));
 }
 
 Widget::~Widget()
@@ -30,5 +31,10 @@ void Widget::everyTic()
     //qDebug() << "helo";
     repaint();
     mField.onTic();
+}
+
+void Widget::onBallTouchMark()
+{
+    qDebug() << "remake!!!";
 }
 
